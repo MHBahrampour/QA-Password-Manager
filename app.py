@@ -7,5 +7,10 @@ def main():
     # show the help page
     print( functions.help_page() )
 
+    # while loop for getting user commands
+    while True:
+        user_input = input("?? ")
+        functions.user_command(user_input)
+
 if __name__ == "__main__":
     main()
