@@ -10,7 +10,7 @@ def help_page():
     To see the user manual type 'man'
     To get out of the app type 'exit'
 
-    Intoduce some sign:
+    Introduce some sign:
     :: -> App questions or message.
     !! -> Warning message.
     ?? -> You can type what you want.
