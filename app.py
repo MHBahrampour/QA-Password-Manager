@@ -9,8 +9,8 @@ def main():
 
     # while loop for getting user commands
     while True:
-        user_input = input("?? ")
-        functions.user_command(user_input)
+        user_input = input( "\n?? " )
+        functions.user_command( user_input )
 
 if __name__ == "__main__":
     main()
