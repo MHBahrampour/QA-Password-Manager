@@ -42,14 +42,33 @@ def exit_door():
         else:
             print(":: ERROR: You entered wrong option!")
 
+def login_page(the_username):
+    
+    print(":: You had two option to using app: ")
+    log = input(":: 1. Sign-up and 2. Log-in ? [1/2] ")
+
+    if log == '1':
+        the_username = add_user(the_username)
+        add_question_answer(the_username)
+        print(":: Congratulation, you signed-up seccessfuly.")
+
+        the_username = input(":: Enter username: ")
+        return database.user_verification(the_username)
+
+    if log == '2':
+        the_username = input(":: Enter username: ")
+        return database.user_verification(the_username)
+
 # add table for the user
-def add_user():
+def add_user(the_username):
 
     # ask username
-    username = input(":: Enter username: ")
+    the_username = input(":: Enter username: ")
 
     # send username to make a table 
-    database.add_user_table(username)
+    database.add_user_table(the_username)
+
+    return the_username
 
 def commit_confirmation():
 
@@ -62,17 +81,16 @@ def commit_confirmation():
     if commit_confirmation == 'n' or commit_confirmation == 'N':
         print(":: Changes not saved.")
 
-def add_question_answer():
+def add_question_answer(the_username):
+    
     while True:
-
         # ask the question
-        #id = input(":: Enter the id: ")
         question = input(":: Enter the qustion: ")
         answer = input(":: Enter the answer: ")
 
-        database.insert_question_answer(question, answer)
+        database.insert_question_answer(the_username, question, answer)
 
-        continue_confirmation = input(":: Do you want to add another Qusetion and answer? [y/N]")
+        continue_confirmation = input(":: Do you want to add another Qusetion and answer? [y/N] ")
 
         if continue_confirmation == 'N' or continue_confirmation == 'n' or continue_confirmation == '':
             print(":: Congratulate, you added some Question and Answer.")
@@ -92,7 +110,7 @@ def user_command(user_input):
         add_user()
 
     if user_input == "addqa":
-        add_question_answer()
+        add_question_answer(the_username)
 
     
     # if user command wasn't exist
