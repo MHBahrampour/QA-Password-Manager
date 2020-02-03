@@ -47,21 +47,29 @@ def login_page(the_username):
     print(":: You had two option to using app: ")
     log = input(":: 1. Sign-up and 2. Log-in ? [1/2] ")
 
+    # sign-up in app
     if log == '1':
+        # create username (table) account
         the_username = add_user(the_username)
+        # ask about questions and answers for log-in
         add_question_answer(the_username)
-        print(":: Congratulation, you signed-up seccessfuly.")
+        print(":: Congratulation, you signed-up seccessfuly.\n")
 
+        # log-in to app
+        print(":: Answer these Questions to log-in: ")
+        # ask username
         the_username = input(":: Enter username: ")
+        # ask the user questions and return verification
         return database.user_verification(the_username)
 
+    # log-in to app
     if log == '2':
+        # ask username
         the_username = input(":: Enter username: ")
         return database.user_verification(the_username)
 
 # add table for the user
 def add_user(the_username):
-
     # ask username
     the_username = input(":: Enter username: ")
 
