@@ -8,7 +8,7 @@ def help_page():
 
     You are using VERSION 1.0
     To see the user manual type 'man'
-    To get out of the app type 'exit'
+    To close the app type '0'
 
     Introduce some sign:
     :: -> App questions or message.
@@ -42,41 +42,55 @@ def exit_door():
         else:
             print(":: ERROR: You entered wrong option!")
 
-def login_page(the_username):
+def login_page():
     
     print(":: You had two option to using app: ")
-    log = input(":: 1. Sign-up and 2. Log-in ? [1/2] ")
+    input_method = input(":: 1. Sign-up or 2. Sign-in ? [1/2] ")
+    return input_method
 
-    # sign-up in app
-    if log == '1':
-        # create username (table) account
-        the_username = add_user(the_username)
-        # ask about questions and answers for log-in
-        add_question_answer(the_username)
-        print(":: Congratulation, you signed-up seccessfuly.\n")
+# create user table
+def sign_up():
 
-        # log-in to app
-        print(":: Answer these Questions to log-in: ")
-        # ask username
-        the_username = input(":: Enter username: ")
-        # ask the user questions and return verification
-        return database.user_verification(the_username)
+    # get username
+    username = input("\n:: Enter your username: ")
 
-    # log-in to app
-    if log == '2':
-        # ask username
-        the_username = input(":: Enter username: ")
-        return database.user_verification(the_username)
+    # create username (table)
+    database.add_user(username)
 
-# add table for the user
-def add_user(the_username):
-    # ask username
-    the_username = input(":: Enter username: ")
+    return username
 
-    # send username to make a table 
-    database.add_user_table(the_username)
+# sign-in to app
+def sign_in():
 
-    return the_username
+    # get username
+    username = input("\n:: Enter your username: ")
+    verification = database.user_verification(username)
+    return verification
+
+# add Questions and Answers
+def add_QA(username):
+    
+    # get QAs
+    while True:
+        # ask QAs
+        question = input("\n:: Enter the Qustion: ")
+        answer = input(":: Enter the Answer: ")
+
+        # send the QA to database
+        database.insert_QA(username, question, answer)
+        
+        # stay or leave?
+        continue_confirmation = input("\n:: Do you want to add another pattern? [y/N] ")
+
+        # if user want to leave
+        if continue_confirmation == 'N' or continue_confirmation == 'n' or continue_confirmation == '':
+            print("\n:: Congratulate, you added some pattern.")
+            commit_confirmation()
+            break
+
+        # if user want to stay
+        if continue_confirmation == 'y':
+            continue
 
 def commit_confirmation():
 
@@ -86,47 +100,28 @@ def commit_confirmation():
         database.commit_changes()
         print(":: Changes seccessfuly saved.")
     
-    if commit_confirmation == 'n' or commit_confirmation == 'N':
+    elif commit_confirmation == 'n' or commit_confirmation == 'N':
         print(":: Changes not saved.")
 
-def add_question_answer(the_username):
-    
-    while True:
-        # ask the question
-        question = input(":: Enter the qustion: ")
-        answer = input(":: Enter the answer: ")
-
-        database.insert_question_answer(the_username, question, answer)
-
-        continue_confirmation = input(":: Do you want to add another Qusetion and answer? [y/N] ")
-
-        if continue_confirmation == 'N' or continue_confirmation == 'n' or continue_confirmation == '':
-            print(":: Congratulate, you added some Question and Answer.")
-            commit_confirmation()
-            break
-
-        if continue_confirmation == 'y':
-            continue
+    else:
+        print(":: Your option is unvalid, Enter 'y' or 'n'. ")
+        commit_confirmation() 
 
 # do what the user want
 def user_command(user_input):
 
-    if user_input == "exit":
+    # close the app
+    if user_input == "0":
         return exit_door()
 
-    if user_input == "addu":
-        add_user()
+    # add new password
+    if user_input == "1:
+        new_password(username)
 
-    if user_input == "addqa":
-        add_question_answer(the_username)
+    #if user_input == "":
 
     
     # if user command wasn't exist
     else:
         print(":: Command not found!")
         print(":: To see commands type 'man' and read the manual.")
-
-
-
-
-
