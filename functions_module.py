@@ -115,7 +115,7 @@ def user_command(user_input):
         return exit_door()
 
     # add new password
-    if user_input == "1:
+    if user_input == "1":
         new_password(username)
 
     #if user_input == "":
