@@ -5,13 +5,26 @@ connection = sqlite3.connect('database.db')
 cursor = connection.cursor()
 
 # make a table for the user
-def add_user(username):
+def add_user_table(username):
 
-    cursor.execute('''CREATE TABLE {0} (
+    # create the name of table
+    table_name = username
+    cursor.execute('''CREATE TABLE IF NOT EXISTS {0} (
         id INTEGER PRIMARY KEY AUTOINCREMENT, 
         question TEXT NOT NULL, 
-        answer TEXT NOT NULL)'''.format(username))
+        answer TEXT NOT NULL)'''.format(table_name))
     print(":: Your account created seccessfuly.")
+
+def add_pass_table(username):
+
+    # create the name of table
+    table_name = (username + "_Pass")
+    cursor.execute('''CREATE TABLE IF NOT EXISTS {0} (
+        id INTEGER PRIMARY KEY AUTOINCREMENT, 
+        title TEXT NOT NULL, 
+        password TEXT NOT NULL)'''.format(table_name))
+
+    print(":: Your pass table created seccessfuly.")
 
 def insert_QA(username, question, answer):
     # insert the QA to database
@@ -69,6 +82,17 @@ def user_verification(username):
         print("\n:: User verification was not seccsessful.")
         return 0
          
+def add_password(username, pass_title, password):
+    
+    # create the name of table
+    table_name = (username + "_Pass")
+
+    # insert a new password
+    cursor.execute("INSERT INTO {0} (title, password) VALUES ('{1}', '{2}')".format(table_name, pass_title, password))
+
+    print(":: Your password added seccessfuly.")
+
+
 # Save (commit) the changes
 def commit_changes():
     connection.commit()

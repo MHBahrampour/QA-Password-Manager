@@ -1,4 +1,5 @@
 import database
+import getpass
 
 # these content give some important options to use this app
 def help_page():
@@ -54,8 +55,9 @@ def sign_up():
     # get username
     username = input("\n:: Enter your username: ")
 
-    # create username (table)
-    database.add_user(username)
+    # create user table and pass table for the user
+    database.add_user_table(username)
+    database.add_pass_table(username)
 
     return username
 
@@ -64,8 +66,9 @@ def sign_in():
 
     # get username
     username = input("\n:: Enter your username: ")
-    verification = database.user_verification(username)
-    return verification
+    verification_code = database.user_verification(username)
+    #return_list = [username, verification_code]
+    return username, verification_code
 
 # add Questions and Answers
 def add_QA(username):
@@ -107,16 +110,47 @@ def commit_confirmation():
         print(":: Your option is unvalid, Enter 'y' or 'n'. ")
         commit_confirmation() 
 
-# do what the user want
-def user_command(user_input):
+def open_manual():
+    file_pointer = open("manual.txt", "r")
+    print(file_pointer.read()) 
 
-    # close the app
+def new_password(username):
+
+    while True:
+        # get information
+        pass_title = input(":: Enter the password title: ")
+        password = getpass.getpass(":: Enter the password: ")
+
+        # send information 
+        database.add_password(username, pass_title, password)
+
+        # stay or leave?
+        continue_confirmation = input("\n:: Do you want to add another password? [y/N] ")
+
+        # if user want to leave
+        if continue_confirmation == 'N' or continue_confirmation == 'n' or continue_confirmation == '':
+            print("\n:: Congratulate, you added some password.")
+            commit_confirmation()
+            break
+
+        # if user want to stay
+        if continue_confirmation == 'y':
+            continue
+
+# do what the user want
+def user_command(username, user_input):
+
+    # show the manual
     if user_input == "0":
-        return exit_door()
+        open_manual()
 
     # add new password
-    if user_input == "1":
+    elif user_input == "1":
         new_password(username)
+
+    # close the app
+    elif user_input == "00":
+        exit_door()
 
     #if user_input == "":
 
