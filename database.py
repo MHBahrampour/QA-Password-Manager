@@ -9,26 +9,42 @@ def add_user_table(username):
 
     # create the name of table
     table_name = username
+
+    # create user table
     cursor.execute('''CREATE TABLE IF NOT EXISTS {0} (
         id INTEGER PRIMARY KEY AUTOINCREMENT, 
         question TEXT NOT NULL, 
         answer TEXT NOT NULL)'''.format(table_name))
+
     print(":: Your account created seccessfuly.")
+
+def insert_QA(username, question, answer):
+    # insert the QA to database
+    cursor.execute("INSERT INTO {0} (question, answer) VALUES ('{1}', '{2}')".format(username, question, answer))
 
 def add_pass_table(username):
 
     # create the name of table
     table_name = (username + "_Pass")
+
+    # create user pass table
     cursor.execute('''CREATE TABLE IF NOT EXISTS {0} (
         id INTEGER PRIMARY KEY AUTOINCREMENT, 
         title TEXT NOT NULL, 
+        description TEXT,
         password TEXT NOT NULL)'''.format(table_name))
 
     print(":: Your pass table created seccessfuly.")
 
-def insert_QA(username, question, answer):
-    # insert the QA to database
-    cursor.execute("INSERT INTO {0} (question, answer) VALUES ('{1}', '{2}')".format(username, question, answer))
+def insert_password(username, pass_title, description, password):
+    
+    # create the name of table
+    table_name = (username + "_Pass")
+
+    # insert a new password
+    cursor.execute("INSERT INTO {0} (title, description, password) VALUES ('{1}', '{2}', '{3}')".format(table_name, pass_title, description, password))
+
+    print(":: Your password added seccessfuly.")
 
 # verify the user want to use app
 def user_verification(username):
@@ -81,16 +97,25 @@ def user_verification(username):
     else:
         print("\n:: User verification was not seccsessful.")
         return 0
-         
-def add_password(username, pass_title, password):
-    
+
+# show all password titles of the user
+def show_pass_titles(username):
+
     # create the name of table
-    table_name = (username + "_Pass")
+    table_name = username + "_Pass"
 
-    # insert a new password
-    cursor.execute("INSERT INTO {0} (title, password) VALUES ('{1}', '{2}')".format(table_name, pass_title, password))
+    # select id and title colum
+    cursor.execute("SELECT id, title, description FROM {0}".format(table_name))
 
-    print(":: Your password added seccessfuly.")
+    # fetchall these data
+    pass_title = cursor.fetchall()
+
+    # ptint headers
+    print("  ID\tTitle\tDescription")
+
+    # print these data
+    for rows in pass_title:
+        print("  {0}\t{1}\t{2}".format(rows[0], rows[1], rows[2]))
 
 
 # Save (commit) the changes

@@ -97,7 +97,7 @@ def add_QA(username):
 
 def commit_confirmation():
 
-    commit_confirmation = input(":: Do you want to save changes? [Y/n]")
+    commit_confirmation = input(":: Do you want to save changes? [Y/n] ")
 
     if commit_confirmation == 'Y' or commit_confirmation == 'y' or commit_confirmation == '':
         database.commit_changes()
@@ -119,10 +119,11 @@ def new_password(username):
     while True:
         # get information
         pass_title = input(":: Enter the password title: ")
+        description = input(":: Enter a description: ")
         password = getpass.getpass(":: Enter the password: ")
 
         # send information 
-        database.add_password(username, pass_title, password)
+        database.insert_password(username, pass_title, description, password)
 
         # stay or leave?
         continue_confirmation = input("\n:: Do you want to add another password? [y/N] ")
@@ -142,14 +143,22 @@ def user_command(username, user_input):
 
     # show the manual
     if user_input == "0":
+        print("## Showing manual page ...\n")
         open_manual()
 
     # add new password
     elif user_input == "1":
+        print("## Adding new password ...\n")
         new_password(username)
+
+    # show all passwords of the user
+    elif user_input == "2":
+        print("## Showing your passwords title ...\n")
+        database.show_pass_titles(username)
 
     # close the app
     elif user_input == "00":
+        print("## Closing application ...\n")
         exit_door()
 
     #if user_input == "":
