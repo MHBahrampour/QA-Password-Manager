@@ -95,6 +95,7 @@ def add_QA(username):
         if continue_confirmation == 'y':
             continue
 
+# save all changes
 def commit_confirmation():
 
     commit_confirmation = input(":: Do you want to save changes? [Y/n]")
@@ -110,10 +111,13 @@ def commit_confirmation():
         print(":: Your option is unvalid, Enter 'y' or 'n'. ")
         commit_confirmation() 
 
+# open the manual file
 def open_manual():
+
     file_pointer = open("manual.txt", "r")
     print(file_pointer.read()) 
 
+# add new password
 def new_password(username):
 
     while True:

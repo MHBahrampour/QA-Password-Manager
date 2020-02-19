@@ -1,10 +1,12 @@
 import sqlite3
 
-# create connection and cursor to the datsabase
+# create connection for datsabase
 connection = sqlite3.connect('database.db')
+
+# create cursor to datsabase
 cursor = connection.cursor()
 
-# make a table for the user
+# create QAs table for user
 def add_user_table(username):
 
     # create the name of table
@@ -15,6 +17,7 @@ def add_user_table(username):
         answer TEXT NOT NULL)'''.format(table_name))
     print(":: Your account created seccessfuly.")
 
+# create password table for user
 def add_pass_table(username):
 
     # create the name of table
@@ -26,11 +29,12 @@ def add_pass_table(username):
 
     print(":: Your pass table created seccessfuly.")
 
+# insert QAs to user QAs table
 def insert_QA(username, question, answer):
     # insert the QA to database
     cursor.execute("INSERT INTO {0} (question, answer) VALUES ('{1}', '{2}')".format(username, question, answer))
 
-# verify the user want to use app
+# verify user access
 def user_verification(username):
 
     # select all QAs of user
@@ -81,7 +85,8 @@ def user_verification(username):
     else:
         print("\n:: User verification was not seccsessful.")
         return 0
-         
+
+# insert passwords to user pass table
 def add_password(username, pass_title, password):
     
     # create the name of table
@@ -91,7 +96,6 @@ def add_password(username, pass_title, password):
     cursor.execute("INSERT INTO {0} (title, password) VALUES ('{1}', '{2}')".format(table_name, pass_title, password))
 
     print(":: Your password added seccessfuly.")
-
 
 # Save (commit) the changes
 def commit_changes():
