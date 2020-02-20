@@ -152,6 +152,10 @@ def user_command(username, user_input):
     elif user_input == "1":
         new_password(username)
 
+    # show existing passwords name
+    elif user_input == "2":
+        show_pass_names(username)
+
     # close the app
     elif user_input == "00":
         exit_door()
