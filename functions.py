@@ -95,6 +95,7 @@ def add_QA(username):
         if continue_confirmation == 'y':
             continue
 
+# save all changes
 def commit_confirmation():
 
     commit_confirmation = input(":: Do you want to save changes? [Y/n] ")
@@ -110,10 +111,13 @@ def commit_confirmation():
         print(":: Your option is unvalid, Enter 'y' or 'n'. ")
         commit_confirmation() 
 
+# open the manual file
 def open_manual():
+
     file_pointer = open("manual.txt", "r")
     print(file_pointer.read()) 
 
+# add new password
 def new_password(username):
 
     while True:
@@ -138,6 +142,47 @@ def new_password(username):
         if continue_confirmation == 'y':
             continue
 
+# select pass to show
+def sellect_pass_to_show(username):
+    
+    # get row number of the password
+    row_number = input("\n:: Enter the row number: ")
+    
+    # show password
+    database.show_password(username, row_number)
+
+# select pass to delete
+def sellect_pass_to_delete(username):
+    
+    # get row number of the password
+    row_number = input("\n:: Enter the row number: ")
+    
+    # delete password
+    database.delete_password(username, row_number)
+
+# select pass to edit
+def sellect_pass_to_edit(username):
+
+    # get row number of the password
+    row_number = input("\n:: Enter the row number: ")
+    
+    # show password
+    database.edit_password(username, row_number)
+
+    # show the current password detail
+    print(":: The current password detail: ")
+    database.show_password(username, row_number)
+
+    print("\n:: Leave a field empty to save that context.")
+
+    # get new field context
+    new_title = input("\n:: Enter new title: ")
+    new_description = input("\n:: Enter new description: ")
+    new_password = input("\n:: Enter new password: ")
+
+    # edit password
+    database.edit_password(username, row_number, new_title, new_description, new_password)
+
 # do what the user want
 def user_command(username, user_input):
 
@@ -155,6 +200,21 @@ def user_command(username, user_input):
     elif user_input == "2":
         print("## Showing your passwords title ...\n")
         database.show_pass_titles(username)
+
+    # select pass to show
+    elif user_input == "3":
+        print("## Showing the password ...")
+        sellect_pass_to_show(username)
+
+    # delete password
+    elif user_input == "4":
+        print(":: Deleting a password ...")
+        sellect_pass_to_delete(username)
+
+    # edit password
+    elif user_input == "5":
+        print(":: Editing a password ...")
+        sellect_pass_to_edit(username)
 
     # close the app
     elif user_input == "00":

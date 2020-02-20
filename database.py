@@ -1,10 +1,12 @@
 import sqlite3
 
-# create connection and cursor to the datsabase
+# create connection for datsabase
 connection = sqlite3.connect('database.db')
+
+# create cursor to datsabase
 cursor = connection.cursor()
 
-# make a table for the user
+# create QAs table for user
 def add_user_table(username):
 
     # create the name of table
@@ -46,7 +48,7 @@ def insert_password(username, pass_title, description, password):
 
     print(":: Your password added seccessfuly.")
 
-# verify the user want to use app
+# verify user access
 def user_verification(username):
 
     # select all QAs of user
@@ -104,19 +106,75 @@ def show_pass_titles(username):
     # create the name of table
     table_name = username + "_Pass"
 
-    # select id and title colum
+    # select id and title column
     cursor.execute("SELECT id, title, description FROM {0}".format(table_name))
 
     # fetchall these data
     pass_title = cursor.fetchall()
 
     # ptint headers
-    print("  ID\tTitle\tDescription")
+    print("   ID\tTitle\tDescription")
 
     # print these data
     for rows in pass_title:
-        print("  {0}\t{1}\t{2}".format(rows[0], rows[1], rows[2]))
+        print("   {0}\t{1}\t{2}".format(rows[0], rows[1], rows[2]))
 
+# show password
+def show_password(username, row_number):
+
+    # create the name of table
+    table_name = (username + "_Pass")
+
+    # select title and password column of the row
+    cursor.execute("SELECT title, password FROM {0} WHERE id = {1}".format(table_name, row_number))
+
+    # fetchall these data
+    password = cursor.fetchall()
+
+    # ptint headers
+    print("\n   Title\tPassword")
+
+    # print these data
+    print("   {0}\t{1}".format(rows[0], rows[1]))
+
+# remove password
+def delete_password(username, row_number):
+
+    # create the name of table
+    table_name = (username + "_Pass")
+
+    # select row to delete
+    cursor.execute("DELETE FROM {0} WHERE id = {1}".format(table_name, row_number))
+
+    print("\n:: Password deleted.")
+
+# edit password
+def edit_password(username, row_number, new_title, new_description, new_password):
+
+    # create the name of table
+    table_name = (username + "_Pass")
+
+    # get current field context
+    cursor.execute("SELECT title, description, password FROM {0} WHERE id = {1}".format(table_name, row_number))
+
+    # fetchall these data
+    row = cursor.fetchall()
+
+    # save current field context
+    current_title = row[0]
+    current_description = row[1]
+    current_password = row[2]
+
+    # don't change these if user want
+    if new_title == "":
+        new_title = current_title
+    if new_description == "":
+        new_description = current_description
+    if new_password == "":
+        new_password = current_password
+
+    # change fields with new contexts
+    
 
 # Save (commit) the changes
 def commit_changes():
