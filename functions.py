@@ -160,17 +160,17 @@ def sellect_pass_to_delete(username):
     # delete password
     database.delete_password(username, row_number)
 
+    # commit?
+    commit_confirmation()
+
 # select pass to edit
 def sellect_pass_to_edit(username):
 
     # get row number of the password
     row_number = input("\n:: Enter the row number: ")
-    
-    # show password
-    database.edit_password(username, row_number)
-
+ 
     # show the current password detail
-    print(":: The current password detail: ")
+    print("\n:: The current password detail: ")
     database.show_password(username, row_number)
 
     print("\n:: Leave a field empty to save that context.")
@@ -182,6 +182,9 @@ def sellect_pass_to_edit(username):
 
     # edit password
     database.edit_password(username, row_number, new_title, new_description, new_password)
+
+    # commit 
+    commit_confirmation()
 
 # do what the user want
 def user_command(username, user_input):
@@ -221,9 +224,6 @@ def user_command(username, user_input):
         print("## Closing application ...\n")
         exit_door()
 
-    #if user_input == "":
-
-    
     # if user command wasn't exist
     else:
         print(":: Command not found!")

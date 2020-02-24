@@ -126,16 +126,16 @@ def show_password(username, row_number):
     table_name = (username + "_Pass")
 
     # select title and password column of the row
-    cursor.execute("SELECT title, password FROM {0} WHERE id = {1}".format(table_name, row_number))
+    cursor.execute("SELECT title, description, password FROM {0} WHERE id = {1}".format(table_name, row_number))
 
     # fetchall these data
-    password = cursor.fetchall()
+    password = cursor.fetchone()
 
     # ptint headers
-    print("\n   Title\tPassword")
+    print("\n   Title   description   Password")
 
     # print these data
-    print("   {0}\t{1}".format(rows[0], rows[1]))
+    print("   {0}   {1}   {2}".format(password[0], password[1], password[2]))
 
 # remove password
 def delete_password(username, row_number):
@@ -158,14 +158,14 @@ def edit_password(username, row_number, new_title, new_description, new_password
     cursor.execute("SELECT title, description, password FROM {0} WHERE id = {1}".format(table_name, row_number))
 
     # fetchall these data
-    row = cursor.fetchall()
+    row = cursor.fetchone()
 
     # save current field context
     current_title = row[0]
     current_description = row[1]
     current_password = row[2]
 
-    # don't change these if user want
+    # don't change these if user don't enter new context
     if new_title == "":
         new_title = current_title
     if new_description == "":
@@ -173,7 +173,17 @@ def edit_password(username, row_number, new_title, new_description, new_password
     if new_password == "":
         new_password = current_password
 
-    # change fields with new contexts
+    ## change fields with new context
+
+    # change title
+    cursor.execute("UPDATE {0} SET title={1} WHERE id={2}".format(table_name, new_title, row_number))
+    
+    # change description
+    cursor.execute("UPDATE {0} SET description={1} WHERE id={2}".format(table_name, new_description, row_number))
+
+    # change password
+    cursor.execute("UPDATE {0} SET password={1} WHERE id={2}".format(table_name, new_password, row_number))
+
     
 
 # Save (commit) the changes

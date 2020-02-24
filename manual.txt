@@ -14,6 +14,7 @@
         1   Insert a new password.
         2   Show a list of all passwords title.
         3   Show the password.
-        4   Remove a password.
+        4   Delete a password.
+        5   Edit a password.
 
         00  Close application.
