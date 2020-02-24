@@ -16,5 +16,6 @@
         3   Show the password.
         4   Delete a password.
         5   Edit a password.
+        6   Search for passwords.
 
         00  Close application.

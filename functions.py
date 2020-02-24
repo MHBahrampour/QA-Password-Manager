@@ -186,6 +186,12 @@ def sellect_pass_to_edit(username):
     # commit 
     commit_confirmation()
 
+# search pass
+def search_pass(username):
+
+    while True:
+        typing = input(":: Typing ... ")
+
 # do what the user want
 def user_command(username, user_input):
 
@@ -218,6 +224,11 @@ def user_command(username, user_input):
     elif user_input == "5":
         print(":: Editing a password ...")
         sellect_pass_to_edit(username)
+
+    # search for passwords
+    elif user_input == "6":
+        print(":: Searching for passwords ...")
+        search_pass(username)
 
     # close the app
     elif user_input == "00":
